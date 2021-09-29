@@ -1,0 +1,76 @@
+
+
+;;;<summary>Updated a contact record</summary>
+;;;<returns>Return value defined by METHOD_STATUS enumeration</returns>
+;;;<param name="Contact">Contact structure</param>
+;;;<param name="GRFA">Previous GRFA</param>
+;;;<param name="Message">Returned message text for non success status</param>
+
+    {xfMethod(interface="SynergyServer",elb="EXE:SynergyServer",encrypt=true)}
+    function UpdateContact, METHOD_STATUS
+
+    {xfParameter(name="Contact")}
+    required inout a_contact, strContact
+
+    {xfParameter(name="GRFA",type=SynType.binaryhandle)}
+    required inout a_grfa, D_HANDLE
+
+    {xfParameter(name="Message")}
+    required out a_message, string
+
+    endparams
+
+    stack record local_data
+        ch          ,int
+        sts         ,METHOD_STATUS
+        tmpContact  ,strContact
+        tmpGRFA     ,a10
+        grfa2       ,a10
+    endrecord
+
+proc
+
+    init local_data
+
+    try
+    begin
+        open(ch=0,u:i,"DAT:contact.ism")
+
+        ;;Use the original GRFA to lock the record
+        grfa2=^m(a_grfa)
+        read(ch,tmpContact,,RFA:grfa2,GETRFA:tmpGRFA)
+
+        ;;Update the record and get the new gRFA
+        write(ch,a_contact,,GETRFA:tmpGRFA)
+        ^m(a_grfa) = tmpGRFA
+
+        ;;Good to go!
+        sts = METHOD_STATUS.SUCCESS
+    end
+    catch (ex, @RecordNotSameException)
+    begin
+        ;;Failed to lock the original record, it must have been changed
+        ;;by another process since this user obtained it. We'll return
+        ;;the new customer record and it's GRFA to the user
+        a_contact = tmpContact
+        ^m(a_grfa) = tmpGRFA
+        sts = METHOD_STATUS.INFO_ERROR
+        a_message = "The record has been changed by another user!"
+    end
+    catch (ex)
+    begin
+        clear a_contact, ^m(a_grfa)
+        sts = METHOD_STATUS.FATAL_ERROR
+        a_message = "A fatal error occurred!"
+    end
+    finally
+    begin
+        if (ch&&chopen(ch))
+            close ch
+    end
+    endtry
+
+    freturn sts
+
+endfunction
+

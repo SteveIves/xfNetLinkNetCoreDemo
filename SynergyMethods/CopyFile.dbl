@@ -1,0 +1,26 @@
+{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+;;; <summary>
+;;; Copies a file on the server
+;;; </summary>
+subroutine CopyFile
+    required in  fromFile       ,string
+    required in  toFile         ,string
+    required out ok             ,i4
+    required out errorMessage   ,string
+    endparams
+proc
+    try
+    begin
+        xcall copy(fromFile,toFile)
+        ok = 1
+        errorMessage = ""
+    end
+    catch (ex)
+    begin
+        ok = 0
+        errorMessage = ex.Message
+    end
+    endtry
+    xreturn
+endsubroutine
+

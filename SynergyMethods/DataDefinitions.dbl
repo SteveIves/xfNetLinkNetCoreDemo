@@ -1,0 +1,9 @@
+
+.include "ADDRESS_TYPE"  repository, enum
+.include "METHOD_STATUS" repository, enum
+
+.include "ADDRESS"  repository, structure="strAddress"  ,end
+.include "CUSTOMER" repository, structure="strCustomer" ,end
+.include "CONTACT"  repository, structure="strContact"  ,end
+
+

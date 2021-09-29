@@ -1,0 +1,82 @@
+
+{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+
+;;;<summary>Returns an address record and current GRFA</summary>
+;;;<returns>Return value defined by METHOD_STATUS enumeration</returns>
+;;;<param name="CustomerID">Passed customer ID</param>
+;;;<param name="AddressID">Passed address ID</param>
+;;;<param name="Address">Returned address structure</param>
+;;;<param name="GRFA">Returned current GRFA</param>
+;;;<param name="Message">Returned message text for non success status</param>
+
+function GetAddressForUpdate, METHOD_STATUS
+
+    {xfParameter(name="CustomerID")}
+    required in a_customer_id, int
+
+    {xfParameter(name="AddressID")}
+    required in a_address_id, int
+
+    {xfParameter(name="Address")}
+    required out a_address, strAddress
+
+    {xfParameter(name="GRFA",type=SynType.binaryhandle)}
+    required out a_grfa, D_HANDLE
+
+    {xfParameter(name="Message")}
+    required out a_message, string
+
+    endparams
+
+    stack record local_data
+        ch      ,int
+        sts     ,METHOD_STATUS
+        tmpgrfa ,a10
+    endrecord
+
+proc
+
+    init local_data, a_address
+
+    a_address.customer_id = a_customer_id
+    a_address.address_id = a_address_id
+
+    a_grfa = mem_proc(DM_RESIZ,10,a_grfa)
+
+    try
+    begin
+        open(ch=syn_freechn(),i:i,"DAT:address.ism")
+        read(ch,a_address,keyval(ch,a_address,1),KEYNUM:1,GETRFA:tmpgrfa)
+        ^m(a_grfa) = tmpgrfa
+        sts = METHOD_STATUS.SUCCESS
+        clear a_message
+    end
+    catch (ex, @KeyNotSameException)
+    begin
+        clear a_address, ^m(a_grfa)
+        sts = METHOD_STATUS.INFO_ERROR
+        a_message = "Address not found!"
+    end
+    catch (ex, @EndOfFileException)
+    begin
+        clear a_address, ^m(a_grfa)
+        sts = METHOD_STATUS.INFO_ERROR
+        a_message = "Address not found!"
+    end
+    catch (ex)
+    begin
+        clear a_address, ^m(a_grfa)
+        sts = METHOD_STATUS.FATAL_ERROR
+        a_message = "A fatal error occurred!"
+    end
+    finally
+    begin
+        if (ch&&chopen(ch))
+            close ch
+    end
+    endtry
+
+    freturn sts
+
+endfunction
+

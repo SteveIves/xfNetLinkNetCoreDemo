@@ -1,0 +1,33 @@
+
+import System.Collections
+import Synergex.synergyde.Select;
+
+{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+;;;<summary>Returns a collection of contacts for a customer</summary>
+;;;<param name="CustomerID">Passed customer ID</param>
+;;;<param name="Contacts">Returned ArrayList of boxed contact structures</param>
+subroutine GetCustomerContacts
+
+    {xfParameter(name="CustomerID")}
+    required in  customer   ,int
+
+    {xfParameter(name="Contacts",collectionType=xfCollectType.structure,structure="strContact")}
+    required out contacts   ,@ArrayList
+
+    endparams
+
+    record
+        contact ,strContact
+    endrecord
+
+proc
+
+    foreach contact in new Select(new From("DAT:contact.ism",contact),(Where)contact.customer_id==customer)
+    begin
+        locase contact.email
+        contacts.Add((@strContact)contact)
+    end
+
+    xreturn
+
+endsubroutine

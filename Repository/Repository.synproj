@@ -1,0 +1,51 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(SolutionDir)Common.props" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <Name>Repository</Name>
+    <OutputName>Repository</OutputName>
+    <ProjectGuid>{89052f3b-d8b0-4165-a87b-911723465dde}</ProjectGuid>
+    <ProjectTypeGuids>{1BD24377-84D3-44B8-B8F3-81C1EB3E22B4};{BBD0F5D1-1CC4-42fd-BA4C-A96779C64378}</ProjectTypeGuids>
+    <NugetTargetMoniker>RPS,Version=1.0</NugetTargetMoniker>
+    <OutputType>RPS</OutputType>
+    <EnableCommonProperties>True</EnableCommonProperties>
+    <AssemblyName>Repository</AssemblyName>
+    <RootNamespace>Repository</RootNamespace>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <OutputPath>$(ProjectDir)</OutputPath>
+    <UnevaluatedOutputPath>$(OutputPath)$(UnevaluatedOutputEnvironmentVariableTrailer_)</UnevaluatedOutputPath>
+    <MOutputName>rpsmain</MOutputName>
+    <TOutputName>rpstext</TOutputName>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseExistingRepository>True</UseExistingRepository>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <OutputPath>$(ProjectDir)</OutputPath>
+    <UnevaluatedOutputPath>$(ProjectDir)</UnevaluatedOutputPath>
+    <MOutputName>rpsmain</MOutputName>
+    <TOutputName>rpstext</TOutputName>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <UseExistingRepository>True</UseExistingRepository>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="repository.scm" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
+  </PropertyGroup>
+  <Import Project="..\packages\Synergex.SynergyDE.Build.21.9.3402\build\rps\Synergex.SynergyDE.Build.targets" Condition="Exists('..\packages\Synergex.SynergyDE.Build.21.9.3402\build\rps\Synergex.SynergyDE.Build.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Synergex.SynergyDE.Build.21.9.3402\build\rps\Synergex.SynergyDE.Build.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Synergex.SynergyDE.Build.21.9.3402\build\rps\Synergex.SynergyDE.Build.targets'))" />
+  </Target>
+</Project>

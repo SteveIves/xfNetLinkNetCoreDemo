@@ -1,0 +1,35 @@
+
+import System.Collections
+import Synergex.synergyde.Select;
+
+{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+;;;<summary>Returns a collection of addresses for a customer</summary>
+;;;<param name="CustomerID">Passed customer ID</param>
+;;;<param name="Addresses">Returned ArrayList of boxed address structures</param>
+subroutine GetCustomerAddresses
+
+    {xfParameter(name="CustomerID")}
+    required in  customer   ,int
+
+    {xfParameter(name="Addresses",collectionType=xfCollectType.structure,structure="strAddress")}
+    required out addresses  ,@ArrayList
+
+    endparams
+
+    record
+        ch          ,int
+        address     ,strAddress
+    endrecord
+
+proc
+
+    open(ch=syn_freechn(),i:i,"DAT:address.ism")
+
+    foreach address in new Select(new From(ch,address),(Where)address.customer_id==customer)
+        addresses.Add((@strAddress)address)
+
+    close ch
+
+    xreturn
+
+endsubroutine

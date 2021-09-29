@@ -1,0 +1,28 @@
+
+import System.Collections
+import Synergex.synergyde.Select
+
+{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+;;; <summary>
+;;; Returns a collection of all customers
+;;; </summary>
+;;; <param name="Customers">Returned ArrayList of boxed customer structures</param>
+subroutine GetAllCustomers
+
+    {xfParameter(name="Customers",collectionType=xfCollectType.structure,structure="strCustomer")}
+    required out customers, @ArrayList
+
+    endparams
+    record
+        customer    ,strCustomer
+    endrecord
+
+proc
+
+    foreach customer in new Select(new From("DAT:customer.ism",customer),OrderBy.AscendingKey(1))
+        customers.Add((@strCustomer)customer)
+
+    xreturn
+
+endsubroutine
+

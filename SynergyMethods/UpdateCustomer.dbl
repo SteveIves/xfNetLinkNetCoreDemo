@@ -1,0 +1,79 @@
+
+{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+;;;<summary>Updated a customer record</summary>
+;;;<param name="Customer">Customer structure</param>
+;;;<param name="GRFA">Previous GRFA</param>
+;;;<param name="Message">
+;;;Returned error message text if return status is
+;;;not METHOD_STATUS.SUCCESS</param>
+;;;<returns>
+;;;Returns a member of the METHOD_STATUS enumeration
+;;;to indicate completion status
+;;;</returns>
+function UpdateCustomer, METHOD_STATUS
+
+    {xfParameter(name="Customer")}
+    required inout a_customer, strCustomer
+
+    {xfParameter(name="GRFA",type=SynType.binaryhandle)}
+    required inout a_grfa, D_HANDLE
+
+    {xfParameter(name="Message")}
+    required out a_message, string
+
+    endparams
+
+    stack record local_data
+        ch          ,int
+        sts         ,METHOD_STATUS
+        tmpCustomer ,strCustomer
+        tmpGRFA     ,a10
+        grfa2       ,a10
+    endrecord
+
+proc
+
+    init local_data
+
+    try
+    begin
+        open(ch=syn_freechn(),u:i,"DAT:customer.ism")
+
+        ;;Use the original GRFA to lock the record
+        grfa2 = ^m(a_grfa)
+        read(ch,tmpCustomer,,RFA:grfa2,GETRFA:tmpGRFA)
+
+        ;;Update the record and get the new gRFA
+        write(ch,a_customer,,GETRFA:tmpGRFA)
+        ^m(a_grfa) = tmpGRFA
+
+        ;;Good to go!
+        sts = METHOD_STATUS.SUCCESS
+    end
+    catch (ex, @RecordNotSameException)
+    begin
+        ;;Failed to lock the original record, it must have been changed
+        ;;by another process since this user obtained it. We'll return
+        ;;the new customer record and it's GRFA to the user
+        a_customer = tmpCustomer
+        ^m(a_grfa) = tmpGRFA
+        sts = METHOD_STATUS.INFO_ERROR
+        a_message = "The record has been changed by another user!"
+    end
+    catch (ex)
+    begin
+        clear a_customer, ^m(a_grfa)
+        sts = METHOD_STATUS.FATAL_ERROR
+        a_message = "A fatal error occurred!"
+    end
+    finally
+    begin
+        if (ch&&chopen(ch))
+            close ch
+    end
+    endtry
+
+    freturn sts
+
+endfunction
+
