@@ -2,7 +2,7 @@
 import System.Collections
 import Synergex.synergyde.Select;
 
-{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
 ;;;<summary>Returns a collection of contacts for a customer</summary>
 ;;;<param name="CustomerID">Passed customer ID</param>
 ;;;<param name="Contacts">Returned ArrayList of boxed contact structures</param>

@@ -1,5 +1,5 @@
 
-{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
 ;;;<summary>Updated a customer record</summary>
 ;;;<param name="Customer">Customer structure</param>
 ;;;<param name="GRFA">Previous GRFA</param>

@@ -6,7 +6,7 @@
 ;;;<param name="GRFA">Previous GRFA</param>
 ;;;<param name="Message">Returned message text for non success status</param>
 
-    {xfMethod(interface="SynergyServer",elb="EXE:SynergyServer",encrypt=true)}
+    {xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods",encrypt=true)}
     function UpdateContact, METHOD_STATUS
 
     {xfParameter(name="Contact")}

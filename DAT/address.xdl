@@ -1,0 +1,46 @@
+!	Synergy ISAM XDL File created Wed Sep 29 17:13:13 2021
+FILE
+	NAME		"address.ism"
+	ADDRESSING	32
+	NETWORK_ENCRYPT	no
+	KEYS		2
+
+RECORD
+	SIZE		238
+	FORMAT		fixed
+	COMPRESS_DATA	no
+	STATIC_RFA	no
+
+	!5ca5 magic, revision 4, 1 byte record overhead
+	!Creation version 9.4.3  
+	!Update revision count 713
+	!File created on Wed Sep 29 12:52:46 2010
+	!8 byte longest key
+	!2 free index blocks, 0x2400 free list head
+	!713 records, 0 free
+
+KEY 0
+	!Primary key
+	START		1
+	LENGTH		4
+	TYPE		integer
+	ORDER		descending
+	NAME		"AddressID"
+	DUPLICATES	no
+	MODIFIABLE	no
+
+	!Root 0x1800, index depth 2
+	!Minimum keys per block 64
+
+KEY 1
+	!Alternate key #1
+	START		5:1
+	LENGTH		4:4
+	TYPE		integer:integer
+	ORDER		ascending:ascending
+	NAME		"CustID_AddrID"
+	DUPLICATES	no
+	MODIFIABLE	no
+
+	!Root 0x1000, index depth 2
+	!Minimum keys per block 42

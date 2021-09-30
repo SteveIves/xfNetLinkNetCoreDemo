@@ -2,7 +2,7 @@
 import System.Collections
 import Synergex.synergyde.Select
 
-{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
 ;;; <summary>
 ;;; Returns a collection of all customers
 ;;; </summary>

@@ -8,4 +8,8 @@
     <PackageReference Include="Synergex.SynergyDE.xfnlnet" Version="12.0.1.3272" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\SynergyClient\SynergyClient.csproj" />
+  </ItemGroup>
+
 </Project>

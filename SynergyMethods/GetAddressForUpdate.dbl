@@ -1,5 +1,5 @@
 
-{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
 
 ;;;<summary>Returns an address record and current GRFA</summary>
 ;;;<returns>Return value defined by METHOD_STATUS enumeration</returns>

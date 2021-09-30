@@ -1,4 +1,4 @@
-{xfMethod(interface="SynergyServer",elb="EXE:SynergyServer")}
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
 ;;; <summary>
 ;;; Copies a file on the server
 ;;; </summary>

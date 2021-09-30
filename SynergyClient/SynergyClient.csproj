@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="SynergyClient.dll" />
+    <None Remove="SynergyClient.bat" />
+    <None Remove="SynergyClient.rsp" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Synergex.SynergyDE.xfnlnet" Version="12.0.1.3272" />
+  </ItemGroup>
+
+</Project>
