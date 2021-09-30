@@ -20,6 +20,10 @@ namespace WebClientApp.Controllers
 
         public IActionResult Index()
         {
+            SynergyClient.SynergyMethods client = new SynergyClient.SynergyMethods();
+            client.connect("localhost", 2356);
+            client.disconnect();
+
             return View();
         }
 
