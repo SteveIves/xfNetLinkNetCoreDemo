@@ -1,0 +1,68 @@
+;;=============================================================================
+;;
+;; Title: PoolSupportMethods.dbl
+;;
+;;=============================================================================
+
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+;;; <summary>
+;;; Called when the object is first created. Use this method to prepare the environment by
+;;; opening files,initializing global data, and so forth. Because this method is called when
+;;; the object is first created, it only gets called only once per object, even if the object
+;;; is reused.
+;;; </summary>
+;;; <returns>Returns 0 if initialization is successful, or 1 if initialization fails</returns>
+function Initialize, ^val
+proc
+    freturn 0
+end
+
+
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+;;; <summary>
+;;; Called when an object is being allocated for use by a client. This method should be used
+;;; for code that should be executed in advance of each time the object is used.
+;;; </summary>
+subroutine Activate
+proc
+    xreturn
+endsubroutine
+
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+;;; <summary>
+;;; Called when an object is released by the client. This method should be used to reset the
+;;; environment to a known state before an object is returned to the pool. Note that because
+;;; objects can be reused, this method may be called multiple times.
+;;; </summary>
+subroutine Deactivate
+proc
+    xreturn
+endsubroutine
+
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+;;; <summary>
+;;; This method is called after Deactivate(), and is used to determine at runtime if an object
+;;; can be re-used. For example, if Deactivate() encountered an error, CanBePooled() could
+;;; indicate that the object should be discarded. Or, Deactivate() could be written to check
+;;; how much effort is required to clean up an object before returning it to the pool. If the
+;;; effort is excessive, and it would be more efficient to discard the object and create a
+;;; new one, CanBePooled() would return 0.
+;;; </summary>
+;;; <returns>Returns 1 if an object can be returned to the pool for reuse, or 0 if not.</returns>
+function CanBePooled, ^val
+proc
+    freturn 1
+end
+
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+;;; <summary>
+;;; Called by the objects disconnect() method. If the object’s connection is shared, it is called
+;;; after the final disconnect(). It can be used to do the final object cleanup, such as closing
+;;; files. This method is called only when objects are going to be discarded (i.e., pool return
+;;; is set to false or CanBePooled() returns 0). If the object is going to be reused, use the
+;;; Deactivate() method to perform cleanup-type activities.
+;;; </summary>
+subroutine Cleanup
+proc
+    xreturn
+endsubroutine

@@ -68,6 +68,7 @@
     <Compile Include="GetCustomerAddresses.dbl" />
     <Compile Include="GetCustomerContacts.dbl" />
     <Compile Include="GetCustomerForUpdate.dbl" />
+    <Compile Include="PoolSupportMethods.dbl" />
     <Compile Include="UpdateContact.dbl" />
     <Compile Include="UpdateCustomer.dbl" />
   </ItemGroup>

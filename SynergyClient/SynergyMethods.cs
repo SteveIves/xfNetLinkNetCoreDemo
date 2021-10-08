@@ -1,4 +1,4 @@
-// Generated on 29-Sep-2021 05:06:46 by gencs v0.0.0.0
+// Generated on 08-Oct-2021 03:12:52 by gencs v0.0.0.0
 // 
 // The contents of this file are auto-generated. Only add modifications to the end of this file.
 // Any modifications will be lost when the file is re-generated.
@@ -394,17 +394,67 @@ namespace SynergyClient
 			return m_xfnet.getUserString();
 		}
 		/// <summary>
+		/// pooling initialization
+		/// </summary>
+		/// <returns></returns>
+		[XFAttr(type=XFAttr.xftype.VALUE,size=4)]
+#if POOLING
+		private int Initialize ()
+#else
+		public int Initialize ()
+#endif
+		{
+			int ret=(int)m_xfnet.callUserMethod("Initialize");
+			return ret;
+		}
+		/// <summary>
+		/// pooling cleanup
+		/// </summary>
+#if POOLING
+		private void Cleanup ()
+#else
+		public void Cleanup ()
+#endif
+		{
+			m_xfnet.callUserMethod("Cleanup");
+		}
+		/// <summary>
+		/// logic when object is pulled from pool
+		/// </summary>
+#if POOLING
+		protected override void Activate ()
+#else
+		public void Activate ()
+#endif
+		{
+			m_xfnet.callUserMethod("Activate");
+		}
+		/// <summary>
+		/// logic when object is put back in pool
+		/// </summary>
+#if POOLING
+		protected override void Deactivate ()
+#else
+		public void Deactivate ()
+#endif
+		{
+			m_xfnet.callUserMethod("Deactivate");
+		}
+		/// <summary>
 		/// indicate if an object can be put back into the pool
 		/// </summary>
 		/// <returns>true if object can be returned to pool</returns>
-		[XFAttr(type=XFAttr.xftype.INTEGER, size=1)]
+		[XFAttr(type=XFAttr.xftype.INTEGER, size=1,id="CanBePooled")]
 #if POOLING
 		protected override bool CanBePooled()
 #else
 		public bool CanBePooled()
 #endif
 		{
-			bool ret = m_xfnet.CanBePooled();
+			bool ret = false;
+			ret =(bool)m_xfnet.callUserMethod("CanBePooled");
+			if (ret == false)
+				 m_xfnet.disconnect(ret);
 			return ret;
 		}
 		#endregion

@@ -12,8 +12,4 @@
     <ProjectReference Include="..\SynergyClient\SynergyClient.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Pool\" />
-  </ItemGroup>
-
 </Project>

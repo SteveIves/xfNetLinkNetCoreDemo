@@ -4,10 +4,13 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.ObjectPool;
+using SynergyClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebClientApp.Pool;
 
 namespace WebClientApp
 {
@@ -24,6 +27,15 @@ namespace WebClientApp
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            services.AddSingleton<ObjectPool<SynergyMethods>>(
+                new DefaultObjectPool<SynergyMethods>(
+                    PoolPolicyHelper.SetupPolicy(
+                        Configuration.GetValue<string>("xfServerPlusHost"),
+                        Configuration.GetValue<int>("xfServerPlusPort"))
+                    )
+                );
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

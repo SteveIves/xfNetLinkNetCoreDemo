@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.ObjectPool;
+using SynergyClient;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,20 +15,33 @@ namespace WebClientApp.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private ObjectPool<SynergyMethods> _pool;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ObjectPool<SynergyMethods> pool)
         {
             _logger = logger;
+            _pool = pool;
         }
 
         public IActionResult Index()
         {
-            SynergyClient.SynergyMethods client = new SynergyClient.SynergyMethods();
-            client.connect("localhost", 2356);
+            SynergyClient.SynergyMethods client = _pool.Get();
 
-            ArrayList customers;
-            client.GetAllCustomers(out customers);
-            client.disconnect();
+            try
+            {
+                ArrayList customers;
+                client.GetAllCustomers(out customers);
+                _pool.Return(client);
+
+                client = _pool.Get();
+                Customer c = (Customer)customers[1];
+                ArrayList contacts;
+                client.GetCustomerContacts(c.Customer_id, out contacts);
+            }
+            finally
+            {
+                _pool.Return(client);
+            }
 
             return View();
         }
