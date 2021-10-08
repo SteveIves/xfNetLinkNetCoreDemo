@@ -14,16 +14,16 @@
     <RootNamespace>Repository</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>$(ProjectDir)</OutputPath>
-    <UnevaluatedOutputPath>$(OutputPath)$(UnevaluatedOutputEnvironmentVariableTrailer_)</UnevaluatedOutputPath>
+    <OutputPath>$(SolutionDir)Repository</OutputPath>
+    <UnevaluatedOutputPath>RPSDAT:</UnevaluatedOutputPath>
     <MOutputName>rpsmain</MOutputName>
     <TOutputName>rpstext</TOutputName>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <UseExistingRepository>True</UseExistingRepository>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>$(ProjectDir)</OutputPath>
-    <UnevaluatedOutputPath>$(ProjectDir)</UnevaluatedOutputPath>
+    <OutputPath>$(SolutionDir)Repository</OutputPath>
+    <UnevaluatedOutputPath>RPSDAT:</UnevaluatedOutputPath>
     <MOutputName>rpsmain</MOutputName>
     <TOutputName>rpstext</TOutputName>
     <PlatformTarget>AnyCPU</PlatformTarget>
