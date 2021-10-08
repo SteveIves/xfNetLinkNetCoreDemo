@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -22,6 +23,9 @@ namespace WebClientApp.Controllers
         {
             SynergyClient.SynergyMethods client = new SynergyClient.SynergyMethods();
             client.connect("localhost", 2356);
+
+            ArrayList customers;
+            client.GetAllCustomers(out customers);
             client.disconnect();
 
             return View();
