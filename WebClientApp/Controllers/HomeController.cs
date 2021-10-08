@@ -20,26 +20,28 @@ namespace WebClientApp.Controllers
         public HomeController(ILogger<HomeController> logger, ObjectPool<SynergyMethods> pool)
         {
             _logger = logger;
-            _pool = pool;
+            _pool = pool;       //Instance of pool from Dependency Injection
         }
 
         public IActionResult Index()
         {
-            SynergyClient.SynergyMethods client = _pool.Get();
+            //Get a SynergyMethods client object from the pool
+            SynergyMethods client = _pool.Get();
 
             try
             {
+                //Use the object to make an xfServerPlus method call
                 ArrayList customers;
                 client.GetAllCustomers(out customers);
-                _pool.Return(client);
 
-                client = _pool.Get();
+                //Use the object to make a second xfServerPlus method call
                 Customer c = (Customer)customers[1];
                 ArrayList contacts;
                 client.GetCustomerContacts(c.Customer_id, out contacts);
             }
             finally
             {
+                //When done, return the SynergyMethods object to the pool
                 _pool.Return(client);
             }
 

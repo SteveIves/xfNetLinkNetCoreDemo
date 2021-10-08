@@ -1,3 +1,4 @@
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -10,7 +11,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using WebClientApp.Pool;
 
 namespace WebClientApp
 {
@@ -28,14 +28,15 @@ namespace WebClientApp
         {
             services.AddControllersWithViews();
 
+            //Create an object pool and make it available via Dependency Injection
             services.AddSingleton<ObjectPool<SynergyMethods>>(
                 new DefaultObjectPool<SynergyMethods>(
-                    PoolPolicyHelper.SetupPolicy(
+                    PoolPolicyHelper.CreatePolicy(
                         Configuration.GetValue<string>("xfServerPlusHost"),
-                        Configuration.GetValue<int>("xfServerPlusPort"))
+                        Configuration.GetValue<int>("xfServerPlusPort")
                     )
-                );
-
+                )
+            );
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
