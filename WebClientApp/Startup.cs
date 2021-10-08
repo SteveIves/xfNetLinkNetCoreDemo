@@ -33,7 +33,9 @@ namespace WebClientApp
                 new DefaultObjectPool<SynergyMethods>(
                     PoolPolicyHelper.CreatePolicy(
                         Configuration.GetValue<string>("xfServerPlusHost"),
-                        Configuration.GetValue<int>("xfServerPlusPort")
+                        Configuration.GetValue<int>("xfServerPlusPort"),
+                        Configuration.GetValue<int>("PoolMaxSize"),
+                        Configuration.GetValue<int>("PoolMaxIdle")
                     )
                 )
             );
