@@ -17,7 +17,6 @@ proc
     freturn 0
 end
 
-
 {xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
 ;;; <summary>
 ;;; Called when an object is being allocated for use by a client. This method should be used
