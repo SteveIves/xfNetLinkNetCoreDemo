@@ -31,7 +31,7 @@ namespace WebClientApp
             //Create an object pool and make it available via Dependency Injection
             services.AddSingleton<ObjectPool<SynergyMethods>>(
                 new DefaultObjectPool<SynergyMethods>(
-                    PoolPolicyHelper.CreatePolicy(
+                    SynergyMethodsPoolPolicyHelper.CreatePolicy(
                         Configuration.GetValue<string>("xfServerPlusHost"),
                         Configuration.GetValue<int>("xfServerPlusPort"),
                         Configuration.GetValue<int>("PoolMaxSize"),

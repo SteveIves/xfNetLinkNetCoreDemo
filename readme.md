@@ -42,13 +42,13 @@ method is used to open data files and perform other early startup operations.
 The Initialize method is a function that returns a ^VAL value. The routine should return 0 if the initialization was successful, or 1 if initialization failed.
 
 ```
-    {xfMethod(interface="MyInterface",elb="EXE:MyElb")}
-    function Initialize, ^val
-    proc
-        ;TODO: Add initialization code here
+{xfMethod(interface="MyInterface",elb="EXE:MyElb")}
+function Initialize, ^val
+proc
+    ;TODO: Add initialization code here
 
-        freturn 0
-    end
+    freturn 0
+end
 ```
 
 ### Adding an Activate Method
@@ -58,13 +58,13 @@ If present, the Activate method is called when an object that is currently in th
 The Activate method is a subroutine:
 
 ```
-    {xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
-    subroutine Activate
-    proc
-        ;TODO: Add activate code here
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+subroutine Activate
+proc
+    ;TODO: Add activate code here
 
-        xreturn
-    endsubroutine
+    xreturn
+endsubroutine
 ```
 
 ### Adding a Deactivate Method
@@ -74,13 +74,13 @@ If present, the Deactivate method is called when an object that was previously a
 The Deactivate method is a subroutine:
 
 ```
-    {xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
-    subroutine Deactivate
-    proc
-        ;TODO: Add deactivate code here
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+subroutine Deactivate
+proc
+    ;TODO: Add deactivate code here
 
-        xreturn
-    endsubroutine
+    xreturn
+endsubroutine
 ```
 
 ### Adding a CanBePooled Method
@@ -91,13 +91,13 @@ released object can be returned to the pool for reuse, or whether it should be d
 The CanBePooled method is a function that returns a ^VAL value. The routine should return 1 if the object can be returned to the pool, and 0 if it should be discarded.
 
 ```
-    {xfMethod(interface="MyInterface",elb="EXE:MyElb")}
-    function CanBePooled, ^val
-    proc
-        ;TODO: Add code to determine of the object can be reused here
+{xfMethod(interface="MyInterface",elb="EXE:MyElb")}
+function CanBePooled, ^val
+proc
+    ;TODO: Add code to determine of the object can be reused here
 
-        freturn 1
-    end
+    freturn 1
+end
 ```
 
 ### Adding a Cleanup Method
@@ -107,13 +107,13 @@ If present, the Cleanup method is called when an object that was previously assi
 The Cleanup method is a subroutine:
 
 ```
-    {xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
-    subroutine Cleanup
-    proc
-        ;TODO: Add cleanup code here
+{xfMethod(interface="SynergyMethods",elb="EXE:SynergyMethods")}
+subroutine Cleanup
+proc
+    ;TODO: Add cleanup code here
 
-        xreturn
-    endsubroutine
+    xreturn
+endsubroutine
 ```
 
 
@@ -124,12 +124,13 @@ When you are done adding the pooling support methods it is time to use the gencs
 Here is an example:
 
 ```
+
 using Synergex.xfnlnet;
 using SynergyClient;
 
 namespace WebClientApp
 {
-    internal class PoolPolicyHelper
+    internal class SynergyMethodsPoolPolicyHelper
     {
         public static BlockingPooledObjectPolicy<SynergyMethods> CreatePolicy(
             string host = "localhost",

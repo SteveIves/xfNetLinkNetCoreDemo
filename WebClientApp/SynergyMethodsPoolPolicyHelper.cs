@@ -4,7 +4,7 @@ using SynergyClient;
 
 namespace WebClientApp
 {
-    internal class PoolPolicyHelper
+    internal class SynergyMethodsPoolPolicyHelper
     {
         public static BlockingPooledObjectPolicy<SynergyMethods> CreatePolicy(
             string host = "localhost",
