@@ -121,10 +121,9 @@ When you are done adding the pooling support methods it is time to use the gencs
 
 ## Defining a Pool Policy
 
-Here is an example:
+Here is an example for an interface called SynergyMethods that implements all five of the pool support methods.
 
 ```
-
 using Synergex.xfnlnet;
 using SynergyClient;
 
@@ -177,6 +176,33 @@ namespace WebClientApp
 ```
 
 ## Defining Pool Characteristics
+
+There are several pieces of information that you will need to provide when implementing an object pool. These are:
+
+* xfServerPlus host system (name or IP address)
+* xfServerPlus listener port (2356 or some other custom value)
+* Maximum pool size
+* Maximum idle pool size
+
+We suggest that you specify these settings via your ASP.NET applications configuration system, by adding them to the appsettings.json file, like this:
+
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft": "Warning",
+      "Microsoft.Hosting.Lifetime": "Information"
+    }
+  },
+  "AllowedHosts": "*",
+  "xfServerPlusHost": "localhost",
+  "xfServerPlusPort": 2356,
+  "PoolMaxSize": 4,
+  "PoolMaxIdle": 2
+}
+```
+In this example, the final four settings in the file (xfServerPlusHost, xfServerPlusPort, PoolMaxSize and PoolMaxIdle) represent the pool characteristics.
 
 ## Creating a Pool Service
 
