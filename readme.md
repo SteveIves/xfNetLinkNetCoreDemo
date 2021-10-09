@@ -16,7 +16,7 @@ There are several steps involved in implementing an object pooling environment w
 * [Add pool support methods](#adding-pool-support-methods)
 * [Define a pool policy](#defining-a-pool-policy)
 * [Define pool characteristics](#defining-pool-characteristics)
-* [Create a pool service](#creating-a-pool-servie)
+* [Create a pool service](#creating-a-pool-service)
 * [Use pooled objects](#using-pooled-objects)
 
 ## Adding Pool Support Methods
