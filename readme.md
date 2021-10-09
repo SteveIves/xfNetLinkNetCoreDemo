@@ -13,23 +13,23 @@ object pooling in .NET (Core) applications is something that is done within the 
 
 There are several steps involved in implementing an object pooling environment within your ASP.NET Core web application. The basic steps are:
 
-* Add pooling support methods to your traditional Synergy interface
-* Define a pooling policy
-* Define pool characteristics
-* Create a pool service in your client application
-* Use pooled client objects to make method calls
+* [Add pool support methods](#adding-pool-support-methods)
+* [Define a pool policy](#defining-a-pool-policy)
+* [Define pool characteristics](#defining-pool-characteristics)
+* [Create a pool service](#creating-a-pool-servie)
+* [Use pooled objects](#using-pooled-objects)
 
-## Adding Pooling Support Methods
+## Adding Pool Support Methods
 
 You may or may not need to add one or more "pooling support" methods to your traditional Synergy environment. These are methods that are 
 called automatically by the pooling environment to allow you to execute code at various times during the lifetime of a pooled object. There
 are five pooling support methods, all of which are optional:
 
 * [Initialize](#adding-an-initialize-method)
-* [Activate](adding-an-activate-method)
-* [Deactivate](adding-a-deactivate-method)
-* [CanBePooled](adding-a-canbepooled-method)
-* [Cleanup](adding-a-cleanup-method)
+* [Activate](#adding-an-activate-method)
+* [Deactivate](#adding-a-deactivate-method)
+* [CanBePooled](#adding-a-canbepooled-method)
+* [Cleanup](#adding-a-cleanup-method)
 
 The functionality of each of these methods is discussed below.
 
@@ -119,12 +119,12 @@ The Cleanup method is a subroutine:
 
 When you are done adding the pooling support methods it is time to use the gencs utility re-generate your xfNetLink .NET client code.
 
-## Defining a Pooling Policy
+## Defining a Pool Policy
 
 ## Defining Pool Characteristics
 
 ## Creating a Pool Service
 
-## Using Pooled Client Objects
+## Using Pooled Objects
 
 
