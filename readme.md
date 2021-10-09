@@ -25,11 +25,11 @@ You may or may not need to add one or more "pooling support" methods to your tra
 called automatically by the pooling environment to allow you to execute code at various times during the lifetime of a pooled object. There
 are five pooling support methods, all of which are optional:
 
-* Initialize
-* Activate
-* Deactivate
-* CanBePooled
-* Cleanup
+* [Initialize](#adding-an-initialize-method)
+* [Activate](adding-an-activate-method)
+* [Deactivate](adding-a-deactivate-method)
+* [CanBePooled](adding-a-canbepooled-method)
+* [Cleanup](adding-a-cleanup-method)
 
 The functionality of each of these methods is discussed below.
 
@@ -39,7 +39,7 @@ If present, the Initialize method is called when a new object is being created a
 any early initialization code that can be executed in advance of the object being assigned to a specific client. Typically the Initialize
 method is used to open data files and perform other early startup operations.
 
-The Initialize method is a function that returns a ^VAL value:
+The Initialize method is a function that returns a ^VAL value. The routine should return 0 if the initialization was successful, or 1 if initialization failed.
 
 ```
     {xfMethod(interface="MyInterface",elb="EXE:MyElb")}
@@ -50,8 +50,6 @@ The Initialize method is a function that returns a ^VAL value:
         freturn 0
     end
 ```
-
-The Initialize function should return 0 if the initialization was successful, or 1 if initialization failed.
 
 ### Adding an Activate Method
 
@@ -69,7 +67,7 @@ The Activate method is a subroutine:
     endsubroutine
 ```
 
-### Adding an Deactivate Method
+### Adding a Deactivate Method
 
 If present, the Deactivate method is called when an object that was previously assigned to a specific client is being released by that client.
 
@@ -90,7 +88,7 @@ The Deactivate method is a subroutine:
 If present, the CanBePooled method is called immediately after the Deactivate method. The purpose of the method is to determine whether the
 released object can be returned to the pool for reuse, or whether it should be discarded and replaced by a new object.
 
-The CanBePooled method is a function that returns a ^VAL value:
+The CanBePooled method is a function that returns a ^VAL value. The routine should return 1 if the object can be returned to the pool, and 0 if it should be discarded.
 
 ```
     {xfMethod(interface="MyInterface",elb="EXE:MyElb")}
@@ -102,9 +100,7 @@ The CanBePooled method is a function that returns a ^VAL value:
     end
 ```
 
-The CanBePooled function should return 1 if the object can be returned to the pool, and 0 if it should be discarded.
-
-### Adding an Cleanup Method
+### Adding a Cleanup Method
 
 If present, the Cleanup method is called when an object that was previously assigned to a specific client is being released by that client.
 
